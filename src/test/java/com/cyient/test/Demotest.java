@@ -1,30 +1,64 @@
 package com.cyient.test;
 
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Demotest {
-	 @DataProvider
-	public Object[][] validData()
-	{
-		 Object[][] main =new Object[3][2];
-		 
-		 main[0][0]="priya";
-		 main[0][1]="priya123";
-		 
-		 main[1][0]="john";
-		 main[1][1]="john123";
-		 
-		 main[2][0]="peter";
-		 main[2][1]="peter123";
-		 
-		 return main;
-	}
-	@Test(dataProvider = "validata")
-	public void validTest(String username,String password)
-	{
-		System.out.println("Test Run" + username + password);
-	}
 
+	public static void main(String[] args) throws IOException {
+		
+             FileInputStream file = new FileInputStream("src/main/resources/testdata/OpenEMRData.xlsx");
+             
+             XSSFWorkbook book=new XSSFWorkbook(file);
+             XSSFSheet sheet=book.getSheet("OpenEMRData");//sheet
+             
+             int rowCount = sheet.getPhysicalNumberOfRows();
+             System.out.println(rowCount);
+             
+             int cellCount=sheet.getRow(0).getPhysicalNumberOfCells();
+             System.out.println(cellCount);
+             Object[][] main = new Object[rowCount -1][cellCount];
+             
+             for(int r=1;r<rowCount;r++) //Row
+             {
+               
+                 for(int c=0;c<cellCount;c++)
+                 {
+                    
+             
+             
+             XSSFRow row = sheet.getRow(r);
+             XSSFCell cell = row.getCell(c);
+             
+             DataFormatter format = new DataFormatter();
+             
+             String cellValue =format.formatCellValue(cell);
+             System.out.println(cellValue);
+             
+             main[r-1][c]=cellValue;
+             
+                 }
+             }
+             
+           System.out.println(main[0][0]);
+           System.out.println(main[1][2]);
+	}
 }
+         	
+             
+             
+                    
+                   
+               
+            
+             
+	
+
+

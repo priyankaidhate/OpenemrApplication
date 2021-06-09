@@ -22,7 +22,7 @@ public class LoginTest {
 
 
 	@Test
-	public void invalidCredentialTest(String username,String password,String languageText,String expectedvalue)
+	public void invalidcredentialTest(String username,String password,String languageText,String expectedvalue)
 	{
 		LoginPage login=new LoginPage(driver);
 		login.sendUsername(username);
@@ -35,7 +35,8 @@ public class LoginTest {
 	}
 	
 	@Test(dataProvider = "validcredentialExcelData",dataProviderClass = DataProviderUtils.class)
-    public void validCredentialTest(String username, String password, String languageText, String expectedValue) {
+    public void validCredentialTest(String username, String password, String languageText, String expectedValue) 
+	{
         LoginPage login = new LoginPage(driver);
         login.sendUsername(username);
         login.sendPassword(password);
